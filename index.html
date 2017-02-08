@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *, *:before, *:after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            width: 100vw;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .label {
+            color: #333;
+            font-size: 40vh;
+            font-weight: 200;
+        }
+
+        footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            height: 30vh;
+        }
+
+        .button {
+            color: #333;
+            font-size: 18vh;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="label"></div>
+    </main>
+
+    <footer>
+        <div class="button"></div>
+    </footer>
+
+    <script>
+        let button = document.querySelector('.button');
+        let label = document.querySelector('.label');
+        let names = [
+            'Paddy', 'Isac',
+            'Sean', 'Caca', 'Sorina', 'Mai',
+            'Blue', 'Corina',
+            'Sasaya', 'FK', 'Stream', 'Cate', 'Yun'
+        ];
+
+        button.status = 0;
+
+        button.onclick = function () {
+            this.status = (this.status + 1) % 2;
+
+            this.setSymbol();
+
+            if (this.status) {
+                label.pause();
+            } else {
+                label.play();
+            }
+        };
+
+        button.setSymbol = function () {
+            this.innerHTML = ['❚❚', '►'][this.status];
+        };
+
+        label.play = function () {
+            this.interval = window.setInterval(function () {
+                this.random();
+            }.bind(this), 50);
+        };
+
+        label.pause = function () {
+            window.clearInterval(this.interval);
+
+            this.random();
+        };
+
+        label.random = function () {
+            this.innerHTML = names[Math.floor(Math.random() * names.length)];
+        };
+
+        document.onkeydown = function (e) {
+            if (32 === e.keyCode) {
+                button.click();
+            }
+        };
+
+        label.play();
+        button.setSymbol();
+    </script>
+</body>
+</html>
